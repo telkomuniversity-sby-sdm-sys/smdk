@@ -19,7 +19,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->forDeployment();
+    }
 
+    public function forDeployment(){
+        User::factory()->create([
+            'id' => '342q-234t-234x-432r',
+            'nama_lengkap' => 'Admin Telkom University',
+            'email_institusi' => 'admin@telkomuniversity.ac.id',
+            'is_admin' => 1,
+            'is_new' => 0,
+            'email_verified_at' => now(),
+        ]);
+    }
+
+    public function forDevelopment(){
         // Check if database is already seeded to avoid Duplicate Entry errors
         if (DB::table('Ref_work_positions')->count() > 0) {
             $this->command->info('Database already seeded. Skipping raw SQL and subsequent seeders.');

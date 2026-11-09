@@ -115,8 +115,10 @@ Route::get('/dashboard', function () {
         'session_id' => Session::getId(),
     ]);
 
-    return view('dashboard', compact('badges'));
+    return view('dashboard', compact('badges', 'user'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/sendInformation', [AllAboutAuthController::class, 'starterSendToUsers'])->name('send-information')->middleware(['admin:{"is_admin":true|"bagian":"sumber daya manusia"}']);
+
 
 Route::group(['prefix' => 'verify-email', 'as' => 'verify-email.'], function () {
     Route::get('/verify-email-view', [AllAboutAuthController::class, 'go_to_verify_page'])->name('view');

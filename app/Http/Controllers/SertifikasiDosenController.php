@@ -21,7 +21,14 @@ class SertifikasiDosenController extends Controller
         if ($this->isAdminOrSdm()) {
             $sertifikasi = SertifikasiDosen::all();
         } else {
-            $sertifikasi = SertifikasiDosen::where('dosen_id', Dosen::where('users_id', session('account')['id'])->first()['id'])->get();
+            try {
+                // Gunakan firstOrFail() agar melempar ModelNotFoundException jika data tidak ada
+                $dosen = Dosen::where('users_id', session('account')['id'])->firstOrFail();
+
+                $sertifikasi = SertifikasiDosen::where('dosen_id', $dosen->id)->get();
+            } catch (ModelNotFoundException $e) {
+                return $this->handleRedirectBack()->with('error_alert', 'Data dosen tidak ditemukan.');
+            }
         }
 
         return view('kelola_data.sertifikasi_dosen.list', compact('sertifikasi'));
@@ -64,7 +71,7 @@ class SertifikasiDosenController extends Controller
         $validated = $request->validate($validation[0], $validation[1], $validation[2]);
 
         // dd((!$this->isAdminOrSdm()) && Dosen::where('users_id', session('account')['id'])->first()['id'] != $validated['dosen_id']);
-        if ((!$this->isAdminOrSdm()) && Dosen::where('users_id', session('account')['id'])->first()['id'] != $validated['dosen_id']) {
+        if ((! $this->isAdminOrSdm()) && Dosen::where('users_id', session('account')['id'])->first()['id'] != $validated['dosen_id']) {
             return $this->handleRedirectBack()->withInput($request->all())->with('error_alert', 'Anda hanya boleh menambahkan data sertifikasi dosen milik sendiri!.');
         }
 
@@ -79,7 +86,7 @@ class SertifikasiDosenController extends Controller
             // $user_id = Dosen::with('pegawai')->where('id',$dosen_user['users_id'])->first()['id'];
             // dd($use)
             // dD($this->onlyOwnerAdminAndSdm($dosen_user['users_id']));
-            if ($this->onlyOwnerAdminAndSdm($dosen_user['users_id'])==false) {
+            if ($this->onlyOwnerAdminAndSdm($dosen_user['users_id']) == false) {
                 throw new \Exception('Anda Tidak Memiliki Akses untuk melakukan perubahan data maupun penambahan data pada segala data Sertifikasi Dosen selain milik anda!.');
             }
             $sertifikat_cek_exist = SertifikasiDosen::where('nomor_registrasi', $request->nomor_registrasi)->first();
@@ -226,7 +233,7 @@ class SertifikasiDosenController extends Controller
             $sertifikasi->update($validated);
             DB::commit();
 
-            $route = redirect()->route('manage.sertifikasi-dosen.view',['id'=>$sertifikasi->id])->with('success', 'Data sertifikasi berhasil diperbarui');
+            $route = redirect()->route('manage.sertifikasi-dosen.view', ['id' => $sertifikasi->id])->with('success', 'Data sertifikasi berhasil diperbarui');
 
             return $this->CekReview($route, '1H4', 'MENGUBAH DATA SERTIFIKASI DOSEN');
         } catch (\Exception $e) {
@@ -338,7 +345,7 @@ class SertifikasiDosenController extends Controller
                 'required_without' => ':attribute wajib diisi jika tidak memilih sertifikat yang sudah ada.',
                 'date' => ':attribute harus berupa tanggal yang valid.',
                 'after_or_equal' => ':attribute tidak boleh sebelum :date.',
-                'dosen_id.exists' => ':attribute Tidak Ditemukan!.'
+                'dosen_id.exists' => ':attribute Tidak Ditemukan!.',
             ], [
                 'input_type' => 'Tipe Input (Kelompok/Mandiri)',
                 'dosen_id' => 'Dosen',

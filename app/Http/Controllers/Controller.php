@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 abstract class Controller
@@ -18,6 +19,7 @@ abstract class Controller
         return $text;
     }
 
+    
     public function onlyOwnerAdminAndSdm($id = null)
     {
         // dd($id);

@@ -62,13 +62,13 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('login')->with('error_alert', 'Akun anda sudah dinonaktifkan! Silahkan menghubungi pihak SDM apabila ada yang dibutuhkan!.');
             }
 
-            $type = strtolower(\App\Models\Tpa::where('users_id', $user->id)->exists() ? 'TPA' : 'Dosen');
+            $type = strtolower($user->tipe_pegawai);
+            // dd($type);
             $role = [];
             if ($type == 'tpa') {
                 $role['is_tpa'] = true;
             } else {
                 $role['is_dosen'] = true;
-
             }
             // dd($user);
             if ($user->is_admin == 1) {

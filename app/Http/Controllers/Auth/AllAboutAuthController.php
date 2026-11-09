@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 use Illuminate\Validation\ValidationException;
+// use App\Models\User;
+
+use App\Mail\EmailInformation;
+
 use Carbon\Carbon;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +29,54 @@ use Illuminate\View\View;
 
 class AllAboutAuthController extends Controller
 {
+    public function starterSendToUsers(){
+        try {
+            // $user = User::where('email_institusi', $email_institusi)->first();
+            $users = User::all();
+            foreach($users as $user){
+                $this->sendFirstEmail($user);
+            }
+            return response()->json(['success' => true, 'data' => ['Berhasil mengirim ke semua email pengguna']], 200);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error_alert', $e->getMessage());
+        }
+    }
+
+    public function sendFirstEmail($userp){
+        //updatePassword
+        $user = User::find($userp->id);
+        $pass = $this->batasi50Karakter($userp->tempat_lahir.'_'.$userp->username);
+        $user->password = bcrypt($pass);
+        $user->is_new = true;
+        $user->save();
+
+        try {
+            // $user = User::where('email_institusi', $email_institusi)->first();
+            if ($user != null) {
+                // if($user->verified_code==null){
+                    $otp = (string) random_int(100000, 999999);
+                    $user->verified_code = $otp;
+                    Mail::to($user->email_pribadi)->send(new EmailInformation($user->email_pribadi, $pass, $user->nama_lengkap, $user->jenis_kelamin,$user->email_institusi));
+                    $user->save();
+                // }
+                // $email_pribadi = $this->mask_email($user->email_pribadi);
+                return response()->json(['success' => true, 'data' => ['Berhasil mengirim ke email', $user->email_pribadi]], 200);
+            } else {
+                throw new \Exception('Tidak ada akun dengan email institusi tersebut');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error_alert', $e->getMessage());
+        }
+
+    }
+
+    function batasi50Karakter($teks) {
+    // Mengecek apakah panjang teks lebih dari 50 karakter
+        if (mb_strlen($teks, 'UTF-8') > 50) {
+            return mb_substr($teks, 0, 50, 'UTF-8');
+        }
+        return $teks;
+    }
     public function send_verify($email_institusi)
     {
         try {

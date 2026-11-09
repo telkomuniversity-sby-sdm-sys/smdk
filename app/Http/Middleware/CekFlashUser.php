@@ -17,6 +17,13 @@ class CekFlashUser
     public function handle(Request $request, Closure $next): Response
     {
         // dd(session('account'));
+        try {
+            if (!session('account')) {
+                return $next($request);
+            }
+        } catch (\Exception $e) {
+            return $next($request);
+        }
         $cek_flash = User::where('id', session('account')['id'])
             ->whereNotNull('flash')
             ->first();

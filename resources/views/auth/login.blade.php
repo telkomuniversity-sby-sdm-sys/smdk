@@ -64,6 +64,19 @@
                         </div>
                     </details>
                 </div>
+
+                <!-- Pemberitahuan Saran Perangkat (PC/Laptop) -->
+                <div class="mt-6 rounded-xl bg-amber-50 p-4 border border-amber-200 dark:bg-amber-900/20 dark:border-amber-800/40 flex items-start gap-3 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-sm font-semibold text-amber-800 dark:text-amber-300">Informasi Perangkat</h3>
+                        <p class="text-sm text-amber-700 dark:text-amber-400 mt-0.5">
+                            Untuk pengalaman yang lebih baik, silahkan mengakses website menggunakan <b>PC atau laptop</b>.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <!-- Kanan: Kartu Login -->
@@ -77,17 +90,7 @@
                     </div>
 
                     <div class="p-8">
-                        <!-- Flash Message Error -->
-                        {{-- {{ dd(session()->has('error')) }} --}}
-                        {{-- @if (session()->has('error'))
-                            <div class="mb-6 p-4 text-sm text-red-800 bg-red-50 border-l-4 border-red-600 dark:bg-red-900/30 dark:text-red-300 rounded-r-md">
-                                <ul class="list-disc pl-5">
-                                    <li>{{ session('error') }}</li>
-                                </ul>
-                            </div>
-                        @endif --}}
                         @if (session()->has('error_alert'))
-                        {{-- {{ dump(session()->has('error_alert')) }} --}}
                             <div class="mb-6 p-4 text-sm text-red-800 bg-red-50 border-l-4 border-red-600 dark:bg-red-900/30 dark:text-red-300 rounded-r-md">
                                 <ul class="list-disc pl-5">
                                     <li>{{ session('error_alert') }}</li>

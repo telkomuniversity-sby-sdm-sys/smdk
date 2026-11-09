@@ -127,7 +127,7 @@ return [
                 'label' => 'Riwayat Pendidikan',
                 'route' => 'manage.jenjang-pendidikan.list',
                 'icon' => 'fa-solid fa-graduation-cap',
-                'roles' => ['is_admin', 'sdm'],
+                'roles' => ['is_admin', 'sdm' ],
             ],
         ],
     ],
