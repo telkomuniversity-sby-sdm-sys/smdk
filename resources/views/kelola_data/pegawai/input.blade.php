@@ -91,10 +91,10 @@
                 <h2 class="text-lg font-semibold text-black text-center">Data Kepegawaian</h2>
 
                 @php
-                    $selectedType = old('tipe_pegawai', request('type') ?? 'Dosen');
+                    $selectedType = old('tipe_pegawai', request('type') ?? 'Pilih');
                 @endphp
                 <x-islc lbl="Tipe Pegawai" nm="tipe_pegawai" onchange="changeTypePegawai(this)" id="tipe_pegawai" required>
-                    <option value="" disabled>-- Pilih Tipe --</option>
+                    <option value="" disabled {{ $selectedType === 'Pilih' ? 'selected' : '' }}>-- Pilih Tipe --</option>
                     <option value="Dosen" {{ $selectedType === 'Dosen' ? 'selected' : '' }}>
                         Dosen</option>
                     <option value="TPA" {{ $selectedType === 'Tpa' ? 'selected' : '' }}>TPA
@@ -106,6 +106,8 @@
                     id="nuptk" nm="nuptk" max="30" :req=true></x-itxt>
                 <x-itxt lbl="Nomor Induk Dosen Nasional (NIDN)" plc="86546854655" nm="nidn" max="30"
                     fill="data-dosen" id="nidn" :req=true></x-itxt>
+                    <x-itxt lbl="Nomor Induk Tenaga Kerja (NITK)" plc="86546854655" nm="nitk" max="50"
+                    fill="data-tpa" id="nitk" :req=true></x-itxt>
 
 
 
@@ -139,6 +141,7 @@
 
 @push('script-under-base')
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('contacts-container');
             const addBtn = document.getElementById('add-contact');
@@ -203,30 +206,61 @@
                 </div>
             `;
             }
-
-            window.changeTypePegawai = function(elemen) {
-                if (elemen.value === "Dosen") {
-                    window.show_data_dosen();
-                } else {
-                    window.hide_data_dosen();
-                }
-            };
-
-            window.hide_data_dosen = function() {
-                console.log(document.querySelectorAll('.data-dosen'));
-
+            hide_data_khusus();
+            function hide_data_khusus() {
                 document.querySelectorAll('.data-dosen').forEach(e => {
+                    e.style.display = "none";
+                    console.log("hide");
+                });
+                document.querySelectorAll('.data-tpa').forEach(e => {
                     e.style.display = "none";
                     console.log("hide");
                 });
             };
 
+            window.changeTypePegawai = function(elemen) {
+                if (elemen.value === "Dosen") {
+                    window.show_data_dosen();
+                    window.hide_data_tpa();
+                } else {
+                    window.hide_data_dosen();
+                    window.show_data_tpa();
+                }
+            };
+
+            window.hide_data_dosen = function() {
+                // console.log(document.querySelectorAll('.data-dosen'));
+
+                document.querySelectorAll('.data-dosen').forEach(e => {
+                    e.style.display = "none";
+                    // console.log("hide");
+                });
+            };
+
             window.show_data_dosen = function() {
-                console.log(document.querySelectorAll('.data-dosen'));
+                // console.log(document.querySelectorAll('.data-dosen'));
 
                 document.querySelectorAll('.data-dosen').forEach(e => {
                     e.style.display = "";
-                    console.log("show");
+                    // console.log("show");
+                });
+            };
+
+            window.hide_data_tpa = function() {
+                // console.log(document.querySelectorAll('.data-tpa'));
+
+                document.querySelectorAll('.data-tpa').forEach(e => {
+                    e.style.display = "none";
+                    // console.log("hide");
+                });
+            };
+
+            window.show_data_tpa = function() {
+                // console.log(document.querySelectorAll('.data-tpa'));
+
+                document.querySelectorAll('.data-tpa').forEach(e => {
+                    e.style.display = "";
+                    // console.log("show");
                 });
             };
 

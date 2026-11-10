@@ -102,9 +102,13 @@
                     </div>
                     @if($user->is_SdmOrAdmin==true && $user->tipe_pegawai=='Dosen')
                         <x-itxt lbl="Nomor Unik Pendidik dan Tenaga Kependidikan (NUPTK)" plc="86546854655" fill="data-dosen"
-                            id="nuptk" nm="nuptk" max="30" val="{{ $user->data_dosen->nuptk }}" :req=true></x-itxt>
+                            id="nuptk" nm="nuptk" max="30" val="{{ $user->data_dosen->nuptk??null }}" :req=true></x-itxt>
                         <x-itxt lbl="Nomor Induk Dosen Nasional (NIDN)" plc="86546854655" nm="nidn" max="30"
-                            fill="data-dosen" id="nidn" val="{{ $user->data_dosen->nidn }}" :req=true ></x-itxt>
+                            fill="data-dosen" id="nidn" val="{{ $user->data_dosen->nidn??null }}" :req=true ></x-itxt>
+                    @endif
+                    @if($user->is_SdmOrAdmin==true && $user->tipe_pegawai=='TPA')
+                        <x-itxt lbl="Nomor Induk Tenaga Kerja (NITK)" plc="86546854655" fill="data-tpa"
+                            id="nitk" nm="nitk" max="50" val="{{ $user->data_tpa->nitk??null }}" :req=true></x-itxt>
                     @endif
                 </div>
             </div>

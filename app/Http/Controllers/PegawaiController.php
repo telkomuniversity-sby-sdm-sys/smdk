@@ -320,6 +320,13 @@ class PegawaiController extends Controller
                 'regex:/^[0-9]+$/',
                 Rule::requiredIf(request("tipe_pegawai$suffix") === 'Dosen'),
             ],
+            "nitk$suffix" => [
+                'nullable',
+                'string',
+                'max:50',
+                'regex:/^[0-9]+$/',
+                Rule::requiredIf(request("tipe_pegawai$suffix") === 'TPA'),
+            ],
         ];
 
         $messages = [
@@ -344,6 +351,9 @@ class PegawaiController extends Controller
             // Pesan untuk NIP
             "nip$suffix.max" => 'NIP Pegawai tidak boleh lebih dari :max karakter.',
             "nip$suffix.regex" => 'NIP Pegawai harus berupa angka saja.',
+            "nutpk$suffix.regex" => 'NUPTK Pegawai harus berupa angka saja.',
+            "nidn$suffix.regex" => 'NIDN Pegawai harus berupa angka saja.',
+            "nitk$suffix.regex" => 'NITK Pegawai harus berupa angka saja.',
         ];
 
         $attributes = [];
@@ -386,6 +396,7 @@ class PegawaiController extends Controller
                 'nip' => 'NIP',
                 'nidn' => 'Nomor Induk Dosen Nasional (NIDN)',
                 'nuptk' => 'Nomor Unik Pendidik dan Tenaga Kependidikan (NUPTK)',
+                'nitk' => 'Nomor Induk Tenaga Kerja (NITK)',
             ];
         }
 

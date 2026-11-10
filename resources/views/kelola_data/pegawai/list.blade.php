@@ -110,7 +110,7 @@
 
                             <td
                                 class="x-tb-cl-fill text-start fill-table-row px-4 py-4 whitespace-nowrap align-middle break-words text-wrap text-slate-600">
-                                {{ $user->nik }}
+                                {{ $user->nik ?? "-" }}
                             </td>
 
                             <td
@@ -123,7 +123,7 @@
                                         <i class="bi bi-whatsapp text-lg"></i>
                                     </a>
                                     <span class="hidden md:inline-block font-medium text-slate-700 tracking-wide">
-                                        {{ $user->telepon }}
+                                        {{ $user->telepon ?? "-" }}
                                     </span>
                                 </div>
                             </td>

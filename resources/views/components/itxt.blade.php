@@ -20,7 +20,7 @@
     $hasAnyHelp = $max !== 'none' || !empty($rules);
 @endphp
 
-<div class="flex flex-col gap-1 {{ $fill }}">
+<div class="{{ $fill }} flex flex-col gap-1">
     <label class="text-sm text-gray-600 font-medium">
         {{ $lbl }}
         @if ($req==true)
@@ -36,7 +36,7 @@
             @if ($type == 'number') inputmode="decimal" @endif
             @if ($max !== 'none') maxlength="{{ $max }}" @endif
             @if($max != 'none' && $type == 'date') max = {{ $max }}  @endif
-            @if($type=='file') 
+            @if($type=='file')
             accept="{{ $file }}"
             @endif
             @if($id!=null) id="{{ $id }}" @endif
