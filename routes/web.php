@@ -117,6 +117,7 @@ Route::get('/dashboard', function () {
 
     return view('dashboard', compact('badges', 'user'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+//penting di awal
 Route::get('/sendInformation', [AllAboutAuthController::class, 'starterSendToUsers'])->name('send-information')->middleware(['admin:{"is_admin":true|"bagian":"sumber daya manusia"}']);
 
 

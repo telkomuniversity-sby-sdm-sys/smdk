@@ -26,8 +26,33 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'id' => '342q-234t-234x-432r',
             'nama_lengkap' => 'Admin Telkom University',
-            'email_institusi' => 'admin@telkomuniversity.ac.id',
+            'email_institusi' => 'admin@loginaja.com',
+            'email_pribadi' => 'evfi29@gmail.com',
+            'username' => 'admin1',
+            'tempat_lahir' => 'Surabaya',
             'is_admin' => 1,
+            'is_new' => 0,
+            'email_verified_at' => now(),
+        ]);
+        User::factory()->create([
+            'id' => '342q-234t-234x-433r',
+            'nama_lengkap' => 'User1',
+            'email_institusi' => 'admin@loginaja2.com',
+            'email_pribadi' => 'vfitria29@gmail.com',
+            'username' => 'admin2',
+            'tempat_lahir' => 'Surabaya',
+            'is_admin' => 0,
+            'is_new' => 0,
+            'email_verified_at' => now(),
+        ]);
+        User::factory()->create([
+            'id' => '342q-234t-234x-434r',
+            'nama_lengkap' => 'User 2',
+            'email_institusi' => 'admin@loginaja3.com',
+            'email_pribadi' => 'evifitriya@student.telkomuniversity.ac.id',
+            'username' => 'admin3',
+            'tempat_lahir' => 'Surabaya',
+            'is_admin' => 0,
             'is_new' => 0,
             'email_verified_at' => now(),
         ]);

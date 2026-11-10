@@ -32,6 +32,7 @@ class Work_Position extends Model
         return $this->hasMany(Work_Position::class, 'parent_id', 'id');
     }
 
+
     public function parent()
     {
         return $this->belongsTo(Work_Position::class, 'parent_id', 'id');
@@ -63,7 +64,7 @@ class Work_Position extends Model
         return $this->hasMany(Dosen::class, 'prodi_id', 'id');
     }
 
-    
+
 
     public function tpa()
     {

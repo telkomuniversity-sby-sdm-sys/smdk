@@ -34,7 +34,9 @@ class AllAboutAuthController extends Controller
             // $user = User::where('email_institusi', $email_institusi)->first();
             $users = User::all();
             foreach($users as $user){
-                $this->sendFirstEmail($user);
+                if($user->done_inform == false){
+                    $this->sendFirstEmail($user);
+                }
             }
             return response()->json(['success' => true, 'data' => ['Berhasil mengirim ke semua email pengguna']], 200);
         } catch (\Exception $e) {
@@ -48,7 +50,6 @@ class AllAboutAuthController extends Controller
         $pass = $this->batasi50Karakter($userp->tempat_lahir.'_'.$userp->username);
         $user->password = bcrypt($pass);
         $user->is_new = true;
-        $user->save();
 
         try {
             // $user = User::where('email_institusi', $email_institusi)->first();
@@ -61,6 +62,9 @@ class AllAboutAuthController extends Controller
                 // }
                 // $email_pribadi = $this->mask_email($user->email_pribadi);
                 return response()->json(['success' => true, 'data' => ['Berhasil mengirim ke email', $user->email_pribadi]], 200);
+                $user->done_inform = true;
+                $user->save();
+
             } else {
                 throw new \Exception('Tidak ada akun dengan email institusi tersebut');
             }

@@ -48,6 +48,7 @@ class User extends Authenticatable
         // ERD USERS fields
         'unit_id',  // FK -> units
         'role',     // enum: admin|atasan|pegawai
+        'done_inform',
     ];
 
     /**

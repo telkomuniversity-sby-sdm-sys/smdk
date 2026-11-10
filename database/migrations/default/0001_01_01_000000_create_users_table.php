@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('password_hash')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
+            $table->boolean('done_inform')->default(false);
             $table->boolean('is_new')->default(true);
             $table->string('flash')->nullable();
             $table->rememberToken();
